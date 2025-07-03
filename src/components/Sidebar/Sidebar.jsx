@@ -2,7 +2,12 @@ import { FaMoon, FaSnowflake } from "react-icons/fa";
 import Company from "./Company";
 import SidebarItem from "./SidebarItem";
 
-export default function Sidebar({ onSelectCategory, isDark, toggleTheme }) {
+export default function Sidebar({
+  onSelectCategory,
+  selectedCategory,
+  isDark,
+  toggleTheme,
+}) {
   const categories = [
     { label: "All", value: "all" },
     { label: "Sandwiches & Meals", value: "sandwiches" },
@@ -37,7 +42,10 @@ export default function Sidebar({ onSelectCategory, isDark, toggleTheme }) {
           <SidebarItem
             key={index}
             label={item.label}
+            value={item.value}
             onClick={() => onSelectCategory(item.value)}
+            isActive={selectedCategory === item.value}
+            isDark={isDark}
           />
         ))}
       </div>

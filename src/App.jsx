@@ -15,6 +15,7 @@ export default function App() {
       } flex min-h-screen`}
     >
       <Sidebar
+        selectedCategory={selectedCategory}
         onSelectCategory={setSelectedCategory}
         isDark={isDark}
         toggleTheme={toggleTheme}
