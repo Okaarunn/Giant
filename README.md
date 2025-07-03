@@ -16,9 +16,7 @@ A modern food ordering dashboard with:
 
 ## 🌙 Dashboard Dark Mode
 
-# ![Dark Mode](screenshots/dark.png)
-
-![Dark Mode](https://github.com/user-attachments/assets/cbc8966a-6875-4705-8907-6602e8e82018)
+![Dark Mode](screenshots/dark.png)
 
 ---
 
@@ -26,10 +24,7 @@ A modern food ordering dashboard with:
 
 - ✅ Theme toggle (Dark/Light)
 - ✅ Dynamic product filtering by category
-- # ✅ Quantity adjustment for checkout
-- Theme toggle (Dark/Light)
-- Dynamic product filtering by category
-- Quantity adjustment for checkout
+- ✅ Quantity adjustment for checkout
 
 ---
 
@@ -37,10 +32,7 @@ A modern food ordering dashboard with:
 
 - ⚛️ React + Vite
 - 🎨 TailwindCSS
-- # 🔧 React Icons
-- React + Vite
-- TailwindCSS
-- React Icons
+- 🔧 React Icons
 
 ---
 
@@ -49,7 +41,4 @@ A modern food ordering dashboard with:
 ```bash
 npm install
 npm run dev
-<<<<<<< HEAD
 ```
-
-=======
