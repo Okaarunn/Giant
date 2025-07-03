@@ -30,55 +30,59 @@ export default function CheckoutForm({
         />
       </div>
 
-      <table className="w-full text-left mb-4">
-        <thead>
-          <tr className="border-b">
-            <th className="py-2">Product</th>
-            <th>Price</th>
-            <th>Qty</th>
-            <th>Subtotal</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {selectedProducts.length === 0 && (
-            <tr>
-              <td colSpan="5" className="text-center py-3">
-                No products selected.
-              </td>
+      <div className="max-h-[330px] overflow-y-auto custom-scroll mb-4">
+        <table className="w-full text-left">
+          <thead>
+            <tr className="border-b">
+              <th className="py-2">Product</th>
+              <th>Price</th>
+              <th>Qty</th>
+              <th>Subtotal</th>
+              <th>Action</th>
             </tr>
-          )}
-
-          {selectedProducts.map((product, index) => {
-            const subtotal = (product.price * product.quantity).toFixed(2);
-
-            return (
-              <tr key={index} className="border-b">
-                <td className="py-2 max-w-[180px] truncate">{product.name}</td>
-                <td>${product.price.toFixed(2)}</td>
-                <td>{product.quantity}</td>
-                <td>${subtotal}</td>
-                <td>
-                  <div className="flex items-center gap-2">
-                    <button
-                      onClick={() => decreaseQty(index)}
-                      className="text-red-500 cursor-pointer hover:text-red-700 border border-red-300 rounded p-1"
-                    >
-                      <FaMinus size={10} />
-                    </button>
-                    <button
-                      onClick={() => increaseQty(index)}
-                      className="text-green-600 cursor-pointer hover:text-green-800 border border-green-300 rounded p-1"
-                    >
-                      <FaPlus size={10} />
-                    </button>
-                  </div>
+          </thead>
+          <tbody>
+            {selectedProducts.length === 0 && (
+              <tr>
+                <td colSpan="5" className="text-center py-3">
+                  No products selected.
                 </td>
               </tr>
-            );
-          })}
-        </tbody>
-      </table>
+            )}
+
+            {selectedProducts.map((product, index) => {
+              const subtotal = (product.price * product.quantity).toFixed(2);
+
+              return (
+                <tr key={index} className="border-b">
+                  <td className="py-2 max-w-[180px] truncate">
+                    {product.name}
+                  </td>
+                  <td>${product.price.toFixed(2)}</td>
+                  <td>{product.quantity}</td>
+                  <td>${subtotal}</td>
+                  <td>
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={() => decreaseQty(index)}
+                        className="text-red-500 cursor-pointer hover:text-red-700 border border-red-300 rounded p-1"
+                      >
+                        <FaMinus size={10} />
+                      </button>
+                      <button
+                        onClick={() => increaseQty(index)}
+                        className="text-green-600 cursor-pointer hover:text-green-800 border border-green-300 rounded p-1"
+                      >
+                        <FaPlus size={10} />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
 
       <div className="flex justify-between items-center mb-4 font-semibold">
         <span>Total:</span>
