@@ -65,7 +65,7 @@ export default function Dashboard({ selectedCategory, isDark }) {
   return (
     <div
       className={`flex-1 rounded-lg m-5 shadow h-[calc(100vh-40px)] flex flex-col relative transition-colors ${
-        isDark ? "bg-gray-800 text-white" : "bg-white text-black"
+        isDark ? "bg-gray-800 text-white" : "bg-gray-100 text-black"
       }`}
     >
       {/* push notification */}
