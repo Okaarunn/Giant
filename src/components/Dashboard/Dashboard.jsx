@@ -94,6 +94,7 @@ export default function Dashboard({ selectedCategory, isDark }) {
             selectedProducts={selectedProducts}
             increaseQty={increaseQty}
             decreaseQty={decreaseQty}
+            isDark={isDark}
           />
         </div>
       </div>

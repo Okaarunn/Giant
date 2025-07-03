@@ -4,6 +4,7 @@ export default function CheckoutForm({
   selectedProducts,
   increaseQty,
   decreaseQty,
+  isDark,
 }) {
   // Hitung total semua item
   const calculateTotal = () => {
@@ -21,7 +22,11 @@ export default function CheckoutForm({
         <input
           type="text"
           placeholder="Enter your name"
-          className="w-full border placeholder-black dark:placeholder-white rounded px-3 py-2"
+          className={`w-full border rounded px-3 py-2 ${
+            isDark
+              ? "placeholder-white text-white  border-gray-600"
+              : "placeholder-gray-500 text-black  border-gray-300"
+          }`}
         />
       </div>
 
@@ -32,7 +37,7 @@ export default function CheckoutForm({
             <th>Price</th>
             <th>Qty</th>
             <th>Subtotal</th>
-            <th>Aksi</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
