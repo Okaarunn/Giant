@@ -1,12 +1,11 @@
 import { useState } from "react";
 import Dashboard from "./components/Dashboard/Dashboard";
 import Sidebar from "./components/Sidebar/Sidebar";
+import { useTheme } from "./contexts/ThemeContext.jsx";
 
 export default function App() {
   const [selectedCategory, setSelectedCategory] = useState("all");
-  const [isDark, setIsDark] = useState(false); // 🔥 Tambahkan ini
-
-  const toggleTheme = () => setIsDark((prev) => !prev); // 🔥 Fungsi toggle
+  const { isDark, toggleTheme } = useTheme();
 
   return (
     <main
@@ -17,10 +16,9 @@ export default function App() {
       <Sidebar
         selectedCategory={selectedCategory}
         onSelectCategory={setSelectedCategory}
-        isDark={isDark}
         toggleTheme={toggleTheme}
       />
-      <Dashboard selectedCategory={selectedCategory} isDark={isDark} />
+      <Dashboard selectedCategory={selectedCategory} />
     </main>
   );
 }

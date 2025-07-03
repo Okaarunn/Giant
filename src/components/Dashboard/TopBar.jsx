@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { FiClock } from "react-icons/fi";
+import { useTheme } from "../../contexts/ThemeContext";
 
-export default function TopBar({ isDark }) {
+export default function TopBar() {
+  const { isDark } = useTheme();
   const [currentTime, setCurrentTime] = useState(new Date());
 
   useEffect(() => {

@@ -1,6 +1,8 @@
 import ProductCard from "./ProductCard";
 
-export default function Products({ addToCheckout, selectedCategory, isDark }) {
+import { useTheme } from "../../contexts/ThemeContext";
+export default function Products({ addToCheckout, selectedCategory }) {
+  const { isDark } = useTheme();
   const products = [
     {
       name: "Burger",
@@ -134,7 +136,6 @@ export default function Products({ addToCheckout, selectedCategory, isDark }) {
               calories={product.calories}
               image={product.image}
               onClick={() => addToCheckout(product)}
-              isDark={isDark}
             />
           ))}
         </div>

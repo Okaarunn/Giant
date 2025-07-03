@@ -1,11 +1,7 @@
-export default function ProductCard({
-  name,
-  price,
-  calories,
-  image,
-  onClick,
-  isDark,
-}) {
+import { useTheme } from "../../contexts/ThemeContext";
+
+export default function ProductCard({ name, price, calories, image, onClick }) {
+  const { isDark } = useTheme();
   const imageURL = "/food/";
 
   return (

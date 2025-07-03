@@ -3,8 +3,12 @@ import TopBar from "./TopBar";
 import CheckoutForm from "./CheckoutForm";
 import Products from "./Products";
 import Notification from "./Notification";
+import { useTheme } from "../../contexts/ThemeContext.jsx";
 
-export default function Dashboard({ selectedCategory, isDark }) {
+export default function Dashboard({ selectedCategory }) {
+  // get isDark from useTheme
+  const { isDark } = useTheme();
+
   // jika ada data di local storage
   const [selectedProducts, setSelectedProducts] = useState(() => {
     const saved = localStorage.getItem("selectedProducts");
@@ -43,7 +47,6 @@ export default function Dashboard({ selectedCategory, isDark }) {
   };
 
   // increase decrease qty, remove product from checkout from
-
   const increaseQty = (index) => {
     const updated = [...selectedProducts];
     updated[index].quantity += 1;
@@ -56,7 +59,7 @@ export default function Dashboard({ selectedCategory, isDark }) {
       updated[index].quantity -= 1;
       setSelectedProducts(updated);
     } else {
-      // Jika quantity 1 dan dikurangi → hapus produk
+      // Jika quantity 1 dan dikurangi hapus produk
       updated.splice(index, 1);
       setSelectedProducts(updated);
     }
@@ -78,14 +81,13 @@ export default function Dashboard({ selectedCategory, isDark }) {
       )}
 
       {/* TopBar */}
-      <TopBar isDark={isDark} />
+      <TopBar />
 
       <div className="flex flex-1 overflow-hidden">
         <div className="flex-1 overflow-y-auto custom-scroll p-4">
           <Products
             selectedCategory={selectedCategory}
             addToCheckout={handleAddToCheckout}
-            isDark={isDark}
           />
         </div>
 
@@ -94,7 +96,6 @@ export default function Dashboard({ selectedCategory, isDark }) {
             selectedProducts={selectedProducts}
             increaseQty={increaseQty}
             decreaseQty={decreaseQty}
-            isDark={isDark}
           />
         </div>
       </div>

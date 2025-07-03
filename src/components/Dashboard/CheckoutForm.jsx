@@ -1,11 +1,13 @@
 import { FaPlus, FaMinus } from "react-icons/fa";
+import { useTheme } from "../../contexts/ThemeContext.jsx";
 
 export default function CheckoutForm({
   selectedProducts,
   increaseQty,
   decreaseQty,
-  isDark,
 }) {
+  const { isDark } = useTheme();
+
   // Hitung total semua item
   const calculateTotal = () => {
     return selectedProducts

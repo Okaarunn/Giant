@@ -1,13 +1,12 @@
 import { FaMoon, FaSnowflake } from "react-icons/fa";
 import Company from "./Company";
 import SidebarItem from "./SidebarItem";
+import { useTheme } from "../../contexts/ThemeContext.jsx";
 
-export default function Sidebar({
-  onSelectCategory,
-  selectedCategory,
-  isDark,
-  toggleTheme,
-}) {
+export default function Sidebar({ onSelectCategory, selectedCategory }) {
+  const { isDark, toggleTheme } = useTheme();
+
+  // data categories
   const categories = [
     { label: "All", value: "all" },
     { label: "Sandwiches & Meals", value: "sandwiches" },
@@ -38,6 +37,7 @@ export default function Sidebar({
       </div>
 
       <div className="flex-1 overflow-y-auto text-[15px] font-medium divide-y divide-gray-300 custom-scroll">
+        {/* get all categories */}
         {categories.map((item, index) => (
           <SidebarItem
             key={index}
@@ -45,7 +45,6 @@ export default function Sidebar({
             value={item.value}
             onClick={() => onSelectCategory(item.value)}
             isActive={selectedCategory === item.value}
-            isDark={isDark}
           />
         ))}
       </div>

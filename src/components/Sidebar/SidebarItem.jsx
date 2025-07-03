@@ -1,10 +1,8 @@
-export default function SidebarItem({
-  label,
-  value,
-  onClick,
-  isActive,
-  isDark,
-}) {
+import { useTheme } from "../../contexts/ThemeContext.jsx";
+
+export default function SidebarItem({ label, onClick, isActive }) {
+  const { isDark } = useTheme();
+
   const activeClass = isActive
     ? isDark
       ? "bg-white text-[#1e2a44]"
