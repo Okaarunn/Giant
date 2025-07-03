@@ -1,6 +1,17 @@
 import { FaPlus, FaMinus } from "react-icons/fa";
 
-export default function CheckoutForm() {
+export default function CheckoutForm({
+  selectedProducts,
+  increaseQty,
+  decreaseQty,
+}) {
+  // Hitung total semua item
+  const calculateTotal = () => {
+    return selectedProducts
+      .reduce((total, product) => total + product.price * product.quantity, 0)
+      .toFixed(2);
+  };
+
   return (
     <div className="border border-gray-200 rounded-lg p-4 shadow-sm text-sm w-[460px]">
       <h2 className="text-lg font-semibold mb-4">🧾 Checkout</h2>
@@ -10,7 +21,7 @@ export default function CheckoutForm() {
         <input
           type="text"
           placeholder="Enter your name"
-          className="w-full border border-gray-300 rounded px-3 py-2"
+          className="w-full border placeholder-black dark:placeholder-white rounded px-3 py-2"
         />
       </div>
 
@@ -25,120 +36,48 @@ export default function CheckoutForm() {
           </tr>
         </thead>
         <tbody>
-          <tr className="border-b">
-            <td className="py-2 max-w-[180px] truncate">
-              Big Mac with Double Cheese
-            </td>
-            <td>$6.49</td>
-            <td>1</td>
-            <td>$6.49</td>
-            <td>
-              <div className="flex items-center gap-2">
-                <button className="text-red-500 hover:text-red-700 border border-red-300 rounded p-1">
-                  <FaMinus size={10} />
-                </button>
-                <button className="text-green-600 hover:text-green-800 border border-green-300 rounded p-1">
-                  <FaPlus size={10} />
-                </button>
-              </div>
-            </td>
-          </tr>
-          <tr className="border-b">
-            <td className="py-2 max-w-[180px] truncate">
-              Quarter Pounder with Bacon and Crispy Onion Rings
-            </td>
-            <td>$7.29</td>
-            <td>2</td>
-            <td>$14.58</td>
-            <td>
-              <div className="flex items-center gap-2">
-                <button className="text-red-500 hover:text-red-700 border border-red-300 rounded p-1">
-                  <FaMinus size={10} />
-                </button>
-                <button className="text-green-600 hover:text-green-800 border border-green-300 rounded p-1">
-                  <FaPlus size={10} />
-                </button>
-              </div>
-            </td>
-          </tr>
-          <tr className="border-b">
-            <td className="py-2 max-w-[180px] truncate">
-              Double Cheeseburger with Spicy Jalapeños and Pickles
-            </td>
-            <td>$5.89</td>
-            <td>1</td>
-            <td>$5.89</td>
-            <td>
-              <div className="flex items-center gap-2">
-                <button className="text-red-500 hover:text-red-700 border border-red-300 rounded p-1">
-                  <FaMinus size={10} />
-                </button>
-                <button className="text-green-600 hover:text-green-800 border border-green-300 rounded p-1">
-                  <FaPlus size={10} />
-                </button>
-              </div>
-            </td>
-          </tr>
-          <tr className="border-b">
-            <td className="py-2 max-w-[180px] truncate">
-              McChicken Deluxe with Lettuce and Garlic Mayo Sauce
-            </td>
-            <td>$5.19</td>
-            <td>3</td>
-            <td>$15.57</td>
-            <td>
-              <div className="flex items-center gap-2">
-                <button className="text-red-500 hover:text-red-700 border border-red-300 rounded p-1">
-                  <FaMinus size={10} />
-                </button>
-                <button className="text-green-600 hover:text-green-800 border border-green-300 rounded p-1">
-                  <FaPlus size={10} />
-                </button>
-              </div>
-            </td>
-          </tr>
-          <tr className="border-b">
-            <td className="py-2 max-w-[180px] truncate">
-              6-Piece Chicken McNuggets with Sweet & Sour Sauce
-            </td>
-            <td>$4.29</td>
-            <td>2</td>
-            <td>$8.58</td>
-            <td>
-              <div className="flex items-center gap-2">
-                <button className="text-red-500 hover:text-red-700 border border-red-300 rounded p-1">
-                  <FaMinus size={10} />
-                </button>
-                <button className="text-green-600 hover:text-green-800 border border-green-300 rounded p-1">
-                  <FaPlus size={10} />
-                </button>
-              </div>
-            </td>
-          </tr>
-          <tr className="border-b">
-            <td className="py-2 max-w-[180px] truncate">
-              Filet-O-Fish with Cheese and Tartar Sauce Combo
-            </td>
-            <td>$5.09</td>
-            <td>1</td>
-            <td>$5.09</td>
-            <td>
-              <div className="flex items-center gap-2">
-                <button className="text-red-500 hover:text-red-700 border border-red-300 rounded p-1">
-                  <FaMinus size={10} />
-                </button>
-                <button className="text-green-600 hover:text-green-800 border border-green-300 rounded p-1">
-                  <FaPlus size={10} />
-                </button>
-              </div>
-            </td>
-          </tr>
+          {selectedProducts.length === 0 && (
+            <tr>
+              <td colSpan="5" className="text-center py-3">
+                No products selected.
+              </td>
+            </tr>
+          )}
+
+          {selectedProducts.map((product, index) => {
+            const subtotal = (product.price * product.quantity).toFixed(2);
+
+            return (
+              <tr key={index} className="border-b">
+                <td className="py-2 max-w-[180px] truncate">{product.name}</td>
+                <td>${product.price.toFixed(2)}</td>
+                <td>{product.quantity}</td>
+                <td>${subtotal}</td>
+                <td>
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => decreaseQty(index)}
+                      className="text-red-500 cursor-pointer hover:text-red-700 border border-red-300 rounded p-1"
+                    >
+                      <FaMinus size={10} />
+                    </button>
+                    <button
+                      onClick={() => increaseQty(index)}
+                      className="text-green-600 cursor-pointer hover:text-green-800 border border-green-300 rounded p-1"
+                    >
+                      <FaPlus size={10} />
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
 
       <div className="flex justify-between items-center mb-4 font-semibold">
         <span>Total:</span>
-        <span>$17.87</span>
+        <span>${calculateTotal()}</span>
       </div>
 
       <button className="w-full bg-red-500 hover:bg-red-600 text-white py-2 rounded transition font-semibold">

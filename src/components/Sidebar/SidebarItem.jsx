@@ -1,11 +1,8 @@
-// SidebarItem.jsx
-export default function SidebarItem({ label, active = false }) {
+export default function SidebarItem({ label, onClick }) {
   return (
-    // using ternary for give active atribute in sidebar
     <div
-      className={`py-3 px-2 cursor-pointer transition-colors hover:text-red-600 ${
-        active ? "text-red-600 font-semibold" : ""
-      }`}
+      onClick={onClick}
+      className="px-4 py-2 cursor-pointer hover:bg-gray-200 transition"
     >
       {label}
     </div>
