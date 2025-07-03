@@ -10,13 +10,13 @@ A modern food ordering dashboard with:
 
 ## ☀️ Dashboard Light Mode
 
-![Light Mode](screenshots/light.png)
+![Light Mode](./screenshots/light.png)
 
 ---
 
 ## 🌙 Dashboard Dark Mode
 
-![Dark Mode](screenshots/dark.png)
+![Dark Mode](./screenshots/dark.png)
 
 ---
 
