@@ -33,6 +33,7 @@ A modern food ordering dashboard with:
 - ⚛️ React + Vite
 - 🎨 TailwindCSS
 - 🔧 React Icons
+- 🎞️ Lottie Files (React Lottie for animations)
 
 ---
 
