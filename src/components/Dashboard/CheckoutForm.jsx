@@ -1,3 +1,6 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useOrder } from "../../contexts/OrderContext.jsx";
 import { FaPlus, FaMinus } from "react-icons/fa";
 import { useTheme } from "../../contexts/ThemeContext.jsx";
 
@@ -7,6 +10,13 @@ export default function CheckoutForm({
   decreaseQty,
 }) {
   const { isDark } = useTheme();
+  const navigate = useNavigate();
+  const { setOrderData } = useOrder();
+
+  // set customer name
+  const [customerName, setCustomerName] = useState("");
+  // set handle name error
+  const [nameError, setNameError] = useState(false);
 
   // Hitung total semua item
   const calculateTotal = () => {
@@ -15,8 +25,30 @@ export default function CheckoutForm({
       .toFixed(2);
   };
 
+  // handle confirm order
+  const handleConfirm = () => {
+    if (!customerName.trim()) {
+      setNameError(true);
+      return;
+    }
+
+    setNameError(false);
+
+    setOrderData({
+      customerName,
+      selectedProducts,
+    });
+
+    // navigate order detail
+    navigate("/order-detail");
+  };
+
   return (
-    <div className="border border-gray-200 rounded-lg p-4 shadow-sm text-sm w-[460px]">
+    <div
+      className={`border rounded-lg p-4 shadow-lg text-sm w-[460px] ${
+        isDark ? "border-gray-500" : "border-gray-200"
+      }`}
+    >
       <h2 className="text-lg font-semibold mb-4">🧾 Checkout</h2>
 
       <div className="mb-4">
@@ -24,12 +56,20 @@ export default function CheckoutForm({
         <input
           type="text"
           placeholder="Enter your name"
+          value={customerName}
+          onChange={(e) => setCustomerName(e.target.value)}
           className={`w-full border rounded px-3 py-2 ${
             isDark
               ? "placeholder-white text-white  border-gray-600"
               : "placeholder-gray-500 text-black  border-gray-300"
           }`}
         />
+
+        {nameError && (
+          <p className="text-red-500 text-xs mt-1">
+            Nama customer tidak boleh kosong.
+          </p>
+        )}
       </div>
 
       <div className="max-h-[330px] overflow-y-auto custom-scroll mb-4">
@@ -91,7 +131,10 @@ export default function CheckoutForm({
         <span>${calculateTotal()}</span>
       </div>
 
-      <button className="w-full bg-red-500 hover:bg-red-600 text-white py-2 rounded transition font-semibold">
+      <button
+        onClick={handleConfirm}
+        className="w-full bg-red-500 hover:bg-red-600 text-white py-2 cursor-pointer rounded transition font-semibold"
+      >
         Confirm Order
       </button>
     </div>

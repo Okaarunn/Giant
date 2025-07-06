@@ -1,24 +1,32 @@
-import { useState } from "react";
-import Dashboard from "./components/Dashboard/Dashboard";
-import Sidebar from "./components/Sidebar/Sidebar";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
+import Home from "./pages/Home";
+import OrderDetail from "./pages/OrderDetail.jsx";
+import SuccessOrder from "./pages/SuccessOrder.jsx";
 import { useTheme } from "./contexts/ThemeContext.jsx";
+import NotFound from "./pages/NotFound.jsx";
 
 export default function App() {
-  const [selectedCategory, setSelectedCategory] = useState("all");
-  const { isDark, toggleTheme } = useTheme();
+  const { isDark } = useTheme();
 
   return (
-    <main
+    <div
       className={`${
         isDark ? "bg-gray-900 text-white" : "bg-white text-black"
-      } flex min-h-screen`}
+      } min-h-screen`}
     >
-      <Sidebar
-        selectedCategory={selectedCategory}
-        onSelectCategory={setSelectedCategory}
-        toggleTheme={toggleTheme}
-      />
-      <Dashboard selectedCategory={selectedCategory} />
-    </main>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          {/* dynamic routing */}
+          <Route path="/category/:categoryName" element={<Home />} />
+
+          {/* basic routing */}
+          <Route path="/order-detail" element={<OrderDetail />} />
+          <Route path="/success-order" element={<SuccessOrder />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Router>
+    </div>
   );
 }

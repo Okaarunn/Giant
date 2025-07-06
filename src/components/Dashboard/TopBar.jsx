@@ -76,9 +76,9 @@ export default function TopBar() {
 
   return (
     <div
-      className={`border-b px-4 pt-6 pb-4 shadow-sm rounded-t-lg transition-all ${
+      className={`border-b px-4 pt-6 pb-4 shadow-lg rounded-t-lg transition-all ${
         isDark
-          ? "bg-gray-800 border-white text-white"
+          ? "bg-slate-800 border-gray-800 text-white"
           : "bg-white border-gray-200 text-gray-800"
       }`}
     >

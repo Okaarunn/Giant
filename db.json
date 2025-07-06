@@ -1,0 +1,187 @@
+{
+  "categories": [
+    {
+      "id": "1",
+      "label": "Sandwiches & Meals",
+      "value": "sandwiches"
+    },
+    {
+      "id": "2",
+      "label": "McNuggets & Meals",
+      "value": "meals"
+    },
+    {
+      "id": "3",
+      "label": "Fries",
+      "value": "fries"
+    },
+    {
+      "id": "4",
+      "label": "Happy Meals",
+      "value": "happymeals"
+    },
+    {
+      "id": "5",
+      "label": "McCafé Coffees",
+      "value": "mccafe_coffees"
+    },
+    {
+      "id": "6",
+      "label": "Beverages",
+      "value": "beverages"
+    },
+    {
+      "id": "7",
+      "label": "Sides & More",
+      "value": "sides_more"
+    },
+    {
+      "id": "8",
+      "label": "McCafé Bakery",
+      "value": "mccafe_bakery"
+    },
+    {
+      "id": "9",
+      "label": "Sweets & Treats",
+      "value": "sweets_treats"
+    },
+    {
+      "id": "10",
+      "label": "Shareables",
+      "value": "shareables"
+    },
+    {
+      "id": "11",
+      "label": "Seasonal Specials",
+      "value": "seasonal_specials"
+    },
+    {
+      "id": "12",
+      "label": "Breakfast",
+      "value": "breakfast"
+    }
+  ],
+  "products": [
+    {
+      "id": "1",
+      "name": "Burger",
+      "price": 5.99,
+      "calories": 450,
+      "image": "food.avif",
+      "categoryId": 1
+    },
+    {
+      "id": "2",
+      "name": "Vegan Salad",
+      "price": 4.5,
+      "calories": 220,
+      "image": "food.avif",
+      "categoryId": 2
+    },
+    {
+      "id": "3",
+      "name": "Kentang goreng",
+      "price": 4.5,
+      "calories": 220,
+      "image": "food.avif",
+      "categoryId": 3
+    },
+    {
+      "id": "4",
+      "name": "Chicken McNuggets (6 pcs)",
+      "price": 3.99,
+      "calories": 270,
+      "image": "food.avif",
+      "categoryId": 2
+    },
+    {
+      "id": "5",
+      "name": "Happy Meal with Cheeseburger & Milk",
+      "price": 4.99,
+      "calories": 500,
+      "image": "food.avif",
+      "categoryId": 4
+    },
+    {
+      "id": "6",
+      "name": "Large French Fries with Extra Salt",
+      "price": 2.49,
+      "calories": 340,
+      "image": "food.avif",
+      "categoryId": 3
+    },
+    {
+      "id": "7",
+      "name": "McCafé Iced Coffee - Caramel Flavor",
+      "price": 2.99,
+      "calories": 180,
+      "image": "food.avif",
+      "categoryId": 5
+    },
+    {
+      "id": "8",
+      "name": "Coca-Cola (Large Size)",
+      "price": 1.99,
+      "calories": 200,
+      "image": "food.avif",
+      "categoryId": 6
+    },
+    {
+      "id": "9",
+      "name": "Spicy Chicken Sandwich with Mayo",
+      "price": 6.25,
+      "calories": 520,
+      "image": "food.avif",
+      "categoryId": 1
+    },
+    {
+      "id": "10",
+      "name": "Side Salad with Low-Fat Dressing",
+      "price": 2.75,
+      "calories": 120,
+      "image": "food.avif",
+      "categoryId": 7
+    },
+    {
+      "id": "11",
+      "name": "Blueberry Muffin from McCafé Bakery",
+      "price": 2.25,
+      "calories": 360,
+      "image": "food.avif",
+      "categoryId": 8
+    },
+    {
+      "id": "12",
+      "name": "Hot Apple Pie (Classic McDonald's Dessert)",
+      "price": 1.49,
+      "calories": 240,
+      "image": "food.avif",
+      "categoryId": 9
+    },
+    {
+      "id": "13",
+      "name": "20 pc Chicken McNuggets Share Box",
+      "price": 7.99,
+      "calories": 900,
+      "image": "food.avif",
+      "categoryId": 10
+    },
+    {
+      "id": "14",
+      "name": "Pumpkin Spice Latte Seasonal Edition",
+      "price": 3.99,
+      "calories": 320,
+      "image": "food.avif",
+      "categoryId": 11
+    },
+    {
+      "id": "15",
+      "name": "Breakfast Burrito with Sausage & Egg",
+      "price": 3.59,
+      "calories": 390,
+      "image": "food.avif",
+      "categoryId": 12
+    }
+  ],
+  "carts": []
+}

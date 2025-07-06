@@ -8,7 +8,7 @@ export default function ProductCard({ name, price, calories, image, onClick }) {
     <div
       onClick={onClick}
       className={`cursor-pointer w-full max-w-[250px] h-[270px] rounded-xl overflow-hidden flex flex-col border ${
-        isDark ? "border-gray-600 bg-gray-800" : "border-black bg-white"
+        isDark ? "border-gray-500 bg-gray-800" : "border-gray-300 bg-white"
       } transition`}
     >
       {/* Removed inner background */}

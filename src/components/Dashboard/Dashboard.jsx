@@ -9,7 +9,7 @@ export default function Dashboard({ selectedCategory }) {
   // get isDark from useTheme
   const { isDark } = useTheme();
 
-  // jika ada data di local storage
+  // if data exist in localstorage
   const [selectedProducts, setSelectedProducts] = useState(() => {
     const saved = localStorage.getItem("selectedProducts");
     return saved ? JSON.parse(saved) : [];
