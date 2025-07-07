@@ -16,6 +16,7 @@ const SuccessOrder = () => {
   const [fadeOut, setFadeOut] = useState(false);
   const [localOrderData, setLocalOrderData] = useState(orderData);
 
+  // Load from localStorage if order data is empty
   useEffect(() => {
     if (!orderData.customerName || orderData.selectedProducts.length === 0) {
       const savedOrder = localStorage.getItem("orderData");
@@ -27,10 +28,12 @@ const SuccessOrder = () => {
     }
   }, [orderData]);
 
+  // Format current date and time
   const now = new Date();
-  const formattedDate = now.toLocaleDateString("en-GB");
-  const formattedTime = now.toLocaleTimeString("en-GB");
+  const formattedDate = now.toLocaleDateString("id-ID");
+  const formattedTime = now.toLocaleTimeString("id-ID");
 
+  // Computed: Total, tax, grand total
   const total = localOrderData.selectedProducts.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0
@@ -38,6 +41,7 @@ const SuccessOrder = () => {
   const tax = total * 0.1;
   const grandTotal = total + tax;
 
+  // Show Order Not Found screen if no valid data
   if (
     !localOrderData.customerName ||
     localOrderData.selectedProducts.length === 0
@@ -45,10 +49,12 @@ const SuccessOrder = () => {
     return <OrderNotFound isDark={isDark} />;
   }
 
+  // Trigger browser print
   const handlePrint = () => {
     window.print();
   };
 
+  // handle done button click, play animation, clear order data, navigate
   const handleDone = () => {
     setIsDone(true);
 
@@ -57,9 +63,9 @@ const SuccessOrder = () => {
     }, 5000);
 
     setTimeout(() => {
-      setOrderData({ customerName: "", selectedProducts: [] }); // << kosongkan di sini
+      setOrderData({ customerName: "", selectedProducts: [] });
       localStorage.removeItem("orderData");
-      navigate("/", { state: { reload: true } }); // kirim sinyal untuk refetch cart
+      navigate("/", { state: { reload: true } });
     }, 4000);
   };
 

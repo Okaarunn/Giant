@@ -7,10 +7,13 @@ import api from "../../services/api";
 import { useEffect, useState } from "react";
 
 export default function Sidebar({ selectedCategory, toggleTheme }) {
+  // set theme
   const { isDark } = useTheme();
   const navigate = useNavigate();
+  // set categories
   const [categories, setCategories] = useState([]);
 
+  // get data categories from /categories
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -20,6 +23,7 @@ export default function Sidebar({ selectedCategory, toggleTheme }) {
         console.error("Failed to fetch categories", err);
       }
     };
+    // mount
     fetchCategories();
   }, []);
 
@@ -34,6 +38,7 @@ export default function Sidebar({ selectedCategory, toggleTheme }) {
       </div>
 
       <div className="flex-1 overflow-y-auto text-[15px] font-medium divide-y divide-gray-300 custom-scroll">
+        {/* if user navigate home = category all */}
         <SidebarItem
           key="all"
           label="All Products"
@@ -41,6 +46,7 @@ export default function Sidebar({ selectedCategory, toggleTheme }) {
           onClick={() => navigate("/")}
           isActive={selectedCategory === "all"}
         />
+        {/* if user navigate home = category name */}
         {categories.map((item) => (
           <SidebarItem
             key={item.id}

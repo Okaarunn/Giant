@@ -2,12 +2,12 @@ import React, { useState, useMemo } from "react";
 import { useOrder } from "../contexts/OrderContext";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "../contexts/ThemeContext";
-import TopBar from "../components/Dashboard/TopBar";
-import ConfirmModal from "../components/OrderDetail/ConfirmModal";
 import { FiHome, FiChevronRight, FiFileText } from "react-icons/fi";
-import api from "../services/api";
 import Lottie from "lottie-react";
 import emptyCartAnimation from "../assets/animations/empty.json";
+import TopBar from "../components/Dashboard/TopBar";
+import ConfirmModal from "../components/OrderDetail/ConfirmModal";
+import api from "../services/api";
 
 export default function DetailOrder() {
   const { orderData, setOrderData } = useOrder();
@@ -46,7 +46,7 @@ export default function DetailOrder() {
         carts.data.map((item) => api.delete(`/carts/${item.id}`))
       );
 
-      // langsung navigate ke success page
+      // navigate succes page after success post orders
       navigate("/success-order");
     } catch (error) {
       console.error("Failed to post order", error);
@@ -57,6 +57,7 @@ export default function DetailOrder() {
     }
   };
 
+  // if dont have product in selected product
   if (!orderData.customerName || orderData.selectedProducts.length === 0) {
     return (
       <div
@@ -116,6 +117,7 @@ export default function DetailOrder() {
             <h3 className="text-xl font-semibold mb-4">Order Details</h3>
 
             <div className="overflow-x-auto custom-scroll max-h-[460px]">
+              {/* selected product table */}
               <table className="min-w-full text-sm">
                 <thead>
                   <tr

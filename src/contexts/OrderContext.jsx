@@ -5,6 +5,7 @@ const OrderContext = createContext();
 export const useOrder = () => useContext(OrderContext);
 
 export const OrderProvider = ({ children }) => {
+  // order data container
   const [orderData, setOrderData] = useState({
     customerName: "",
     selectedProducts: [],

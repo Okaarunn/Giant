@@ -17,6 +17,7 @@ export default function Products({ selectedCategory }) {
     fetchProducts();
   }, []);
 
+  // filter product from selected category
   const filteredProducts =
     selectedCategory === "all"
       ? products
@@ -35,6 +36,7 @@ export default function Products({ selectedCategory }) {
       ) : (
         <div className="grid grid-cols-3 gap-5">
           {filteredProducts.map((product) => (
+            // product card
             <ProductCard
               key={product.id}
               name={product.name}

@@ -14,8 +14,9 @@ export default function Dashboard({ selectedCategory }) {
 
   useEffect(() => {
     if (location.state?.reload) {
-      fetchCart(); // refresh cart dari API
-      window.history.replaceState({}, document.title); // hapus state agar tidak fetch lagi pas user klik back
+      // refresh cart from API
+      fetchCart();
+      window.history.replaceState({}, document.title);
     }
   }, [location.state]);
 

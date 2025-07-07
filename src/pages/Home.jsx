@@ -1,8 +1,9 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useTheme } from "../contexts/ThemeContext";
+
 import Sidebar from "../components/Sidebar/Sidebar";
 import Dashboard from "../components/Dashboard/Dashboard";
-import { useTheme } from "../contexts/ThemeContext";
 import api from "../services/api";
 
 export default function Home() {
@@ -13,7 +14,7 @@ export default function Home() {
   const [validCategories, setValidCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Ambil kategori dari API
+  // fetch categories data
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -34,7 +35,7 @@ export default function Home() {
       ? "all"
       : categoryName;
 
-  // Redirect jika kategori tidak valid (setelah validCategories dimuat)
+  // if categories name not valid, redirect in /
   useEffect(() => {
     if (!isLoading && categoryName && !validCategories.includes(categoryName)) {
       navigate("/");
