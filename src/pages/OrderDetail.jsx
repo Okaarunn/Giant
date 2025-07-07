@@ -1,32 +1,62 @@
-import React, { useState } from "react";
-
+import React, { useState, useMemo } from "react";
 import { useOrder } from "../contexts/OrderContext";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "../contexts/ThemeContext";
 import TopBar from "../components/Dashboard/TopBar";
 import ConfirmModal from "../components/OrderDetail/ConfirmModal";
 import { FiHome, FiChevronRight, FiFileText } from "react-icons/fi";
-
+import api from "../services/api";
 import Lottie from "lottie-react";
-import emptyCartAnimation from "../assets/animations/empty.json"; // sesuaikan path
+import emptyCartAnimation from "../assets/animations/empty.json";
 
 export default function DetailOrder() {
-  // get order data from order context
-  const { orderData } = useOrder();
-  // navigate
+  const { orderData, setOrderData } = useOrder();
   const navigate = useNavigate();
-  // dark
   const { isDark } = useTheme();
-
-  // show modal
   const [showModal, setShowModal] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const total = orderData.selectedProducts.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  );
+  const total = useMemo(() => {
+    return orderData.selectedProducts.reduce(
+      (sum, item) => sum + item.price * item.quantity,
+      0
+    );
+  }, [orderData.selectedProducts]);
 
-  // if order data 0
+  // handle confirm
+  const handleConfirmOrder = async () => {
+    setIsSubmitting(true);
+    try {
+      // post data in orders
+      await api.post("/orders", {
+        customerName: orderData.customerName,
+        products: orderData.selectedProducts.map((item) => ({
+          id: item.id,
+          name: item.name,
+          price: item.price,
+          quantity: item.quantity,
+        })),
+        total: total.toFixed(2),
+        createdAt: new Date().toISOString(),
+      });
+
+      // after post data, delete carts
+      const carts = await api.get("/carts");
+      await Promise.all(
+        carts.data.map((item) => api.delete(`/carts/${item.id}`))
+      );
+
+      // langsung navigate ke success page
+      navigate("/success-order");
+    } catch (error) {
+      console.error("Failed to post order", error);
+      alert("Failed to place order. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+      setShowModal(false);
+    }
+  };
+
   if (!orderData.customerName || orderData.selectedProducts.length === 0) {
     return (
       <div
@@ -34,21 +64,18 @@ export default function DetailOrder() {
           isDark ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900"
         }`}
       >
-        {/* BIG animation center screen */}
         <div className="w-full max-w-md mb-6">
           <Lottie animationData={emptyCartAnimation} loop={true} />
         </div>
-
         <h2 className="text-2xl md:text-3xl font-bold mb-2">
           Oops! No Orders Yet
         </h2>
         <p className="text-sm md:text-base text-gray-500 dark:text-gray-400 mb-6">
           You haven’t added any products to your cart.
         </p>
-
         <button
           onClick={() => navigate("/")}
-          className="bg-red-600  hover:bg-red-700 text-white font-bold px-3 py-2 cursor-pointer rounded text-sm md:text-base transition"
+          className="bg-red-600 hover:bg-red-700 cursor-pointer text-white font-bold px-3 py-2 rounded text-sm md:text-base transition"
         >
           Browse Products
         </button>
@@ -65,12 +92,8 @@ export default function DetailOrder() {
       <TopBar />
 
       <div className="w-full pt-2">
-        {/* Breadcrumb */}
-
-        {/* Layout */}
         <div className="flex flex-col lg:flex-row justify-between gap-6">
-          {/* Order Table */}
-
+          {/* Order Details */}
           <div
             className={`flex-1 p-6 rounded-lg shadow ${
               isDark ? "bg-gray-800" : "bg-white"
@@ -92,7 +115,6 @@ export default function DetailOrder() {
 
             <h3 className="text-xl font-semibold mb-4">Order Details</h3>
 
-            {/* Scrollable table wrapper */}
             <div className="overflow-x-auto custom-scroll max-h-[460px]">
               <table className="min-w-full text-sm">
                 <thead>
@@ -108,9 +130,9 @@ export default function DetailOrder() {
                   </tr>
                 </thead>
                 <tbody>
-                  {orderData.selectedProducts.map((product, idx) => (
+                  {orderData.selectedProducts.map((product) => (
                     <tr
-                      key={idx}
+                      key={product.id}
                       className={`border-b ${
                         isDark ? "border-gray-700" : "border-gray-300"
                       }`}
@@ -128,7 +150,7 @@ export default function DetailOrder() {
             </div>
           </div>
 
-          {/* Summary Card */}
+          {/* Summary */}
           <div
             className={`w-full lg:w-[320px] p-6 rounded-lg shadow h-fit ${
               isDark ? "bg-gray-800" : "bg-white"
@@ -146,7 +168,7 @@ export default function DetailOrder() {
               </p>
             </div>
 
-            <div className=" pt-4 mt-4 flex justify-between font-semibold">
+            <div className="pt-4 mt-4 flex justify-between font-semibold">
               <span>Total:</span>
               <span className={isDark ? "text-white" : "text-red-500"}>
                 ${total.toFixed(2)}
@@ -155,27 +177,26 @@ export default function DetailOrder() {
 
             <button
               onClick={() => setShowModal(true)}
-              className="mt-6 w-full bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded transition cursor-pointer"
+              disabled={isSubmitting}
+              className="mt-6 w-full bg-red-500  hover:bg-red-600 text-white py-2 px-4 rounded transition cursor-pointer"
             >
-              Confirm Order
+              {isSubmitting ? "Submitting..." : "Confirm Order"}
             </button>
 
             <ConfirmModal
               show={showModal}
               onClose={() => setShowModal(false)}
-              onConfirm={() => navigate("/success-order")}
+              onConfirm={handleConfirmOrder}
               title="Are you sure?"
               message="You’re about to place this order. Do you want to continue?"
             />
 
             <button
               onClick={() => navigate("/")}
-              className={`mt-6 w-full py-2 px-4 rounded font-medium transition-all duration-300 ease-in-out ${
+              className={`mt-6 w-full py-2 px-4 cursor-pointer rounded font-medium transition-all duration-300 ease-in-out ${
                 isDark
-                  ? // dark
-                    "bg-gray-700 hover:bg-gray-800 text-white border border-transparent hover:border-white cursor-pointer"
-                  : // light
-                    "bg-gray-700 hover:bg-transparent text-white hover:text-gray-800 border border-transparent hover:border-gray-800 cursor-pointer"
+                  ? "bg-gray-900 hover:bg-gray-950  text-white"
+                  : "bg-gray-700 hover:bg-transparent text-white hover:text-gray-800 border border-transparent hover:border-gray-800"
               }`}
             >
               Cancel

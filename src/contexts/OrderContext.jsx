@@ -1,20 +1,14 @@
-import { createContext, useContext, useState, useEffect } from "react"; // ✅ jangan lupa useEffect
+import { createContext, useContext, useState } from "react";
 
 const OrderContext = createContext();
 
 export const useOrder = () => useContext(OrderContext);
 
 export const OrderProvider = ({ children }) => {
-  const [orderData, setOrderData] = useState(() => {
-    const saved = localStorage.getItem("orderData");
-    return saved
-      ? JSON.parse(saved)
-      : { customerName: "", selectedProducts: [] };
+  const [orderData, setOrderData] = useState({
+    customerName: "",
+    selectedProducts: [],
   });
-
-  useEffect(() => {
-    localStorage.setItem("orderData", JSON.stringify(orderData));
-  }, [orderData]);
 
   return (
     <OrderContext.Provider value={{ orderData, setOrderData }}>

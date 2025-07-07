@@ -3,41 +3,43 @@ import { useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar/Sidebar";
 import Dashboard from "../components/Dashboard/Dashboard";
 import { useTheme } from "../contexts/ThemeContext";
+import api from "../services/api";
 
 export default function Home() {
   const { categoryName } = useParams();
   const navigate = useNavigate();
-  const [selectedCategory, setSelectedCategory] = useState("all");
   const { isDark, toggleTheme } = useTheme();
 
-  // daftar kategori langsung
-  const validCategories = [
-    "all",
-    "sandwiches",
-    "meals",
-    "fries",
-    "happymeals",
-    "mccafe_coffees",
-    "beverages",
-    "sides_more",
-    "mccafe_bakery",
-    "sweets_treats",
-    "shareables",
-    "seasonal_specials",
-    "breakfast",
-    "burgers_more",
-    "cold_drinks",
-    "hot_beverages",
-  ];
+  const [validCategories, setValidCategories] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
+  // Ambil kategori dari API
   useEffect(() => {
-    if (!categoryName || !validCategories.includes(categoryName)) {
-      setSelectedCategory("all");
+    const fetchCategories = async () => {
+      try {
+        const res = await api.get("/categories");
+        const values = res.data.map((cat) => cat.value);
+        setValidCategories(values);
+      } catch (error) {
+        console.error("Failed to fetch categories", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchCategories();
+  }, []);
+
+  const selectedCategory =
+    !categoryName || !validCategories.includes(categoryName)
+      ? "all"
+      : categoryName;
+
+  // Redirect jika kategori tidak valid (setelah validCategories dimuat)
+  useEffect(() => {
+    if (!isLoading && categoryName && !validCategories.includes(categoryName)) {
       navigate("/");
-    } else {
-      setSelectedCategory(categoryName);
     }
-  }, [categoryName]);
+  }, [categoryName, validCategories, isLoading]);
 
   return (
     <main
@@ -45,11 +47,7 @@ export default function Home() {
         isDark ? "bg-gray-900 text-white" : "bg-white text-black"
       } flex min-h-screen`}
     >
-      <Sidebar
-        selectedCategory={selectedCategory}
-        onSelectCategory={setSelectedCategory}
-        toggleTheme={toggleTheme}
-      />
+      <Sidebar selectedCategory={selectedCategory} toggleTheme={toggleTheme} />
       <Dashboard selectedCategory={selectedCategory} />
     </main>
   );

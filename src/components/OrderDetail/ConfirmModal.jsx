@@ -1,4 +1,3 @@
-// components/ConfirmModal.jsx
 import React from "react";
 
 export default function ConfirmModal({
@@ -25,25 +24,25 @@ export default function ConfirmModal({
 
         <div className="flex gap-3">
           <button
+            type="button"
             onClick={onClose}
-            className="cursor-pointer w-full py-2 bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-white rounded-lg font-medium hover:bg-gray-300 dark:hover:bg-gray-500 transition"
+            className="w-full py-2 cursor-pointer bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-white rounded-lg font-medium hover:bg-gray-300 dark:hover:bg-gray-500 transition"
           >
             Cancel
           </button>
           <button
-            onClick={() => {
-              onConfirm();
-              onClose();
-            }}
-            className="cursor-pointer w-full py-2 bg-red-600 text-white rounded-lg font-medium hover:bg-red-700 transition"
+            type="button"
+            onClick={onConfirm}
+            className="w-full py-2 cursor-pointer bg-red-600 text-white rounded-lg font-medium hover:bg-red-700 transition"
           >
             Confirm
           </button>
         </div>
 
         <button
+          type="button"
           onClick={onClose}
-          className="cursor-pointer absolute top-2 right-2 text-gray-400 hover:text-gray-600 dark:hover:text-white transition text-xl"
+          className="absolute top-2 cursor-pointer right-2 text-gray-400 hover:text-gray-600 dark:hover:text-white transition text-xl"
         >
           ×
         </button>

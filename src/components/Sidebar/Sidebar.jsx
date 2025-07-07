@@ -3,33 +3,25 @@ import { FaMoon, FaSnowflake } from "react-icons/fa";
 import Company from "./Company";
 import SidebarItem from "./SidebarItem";
 import { useTheme } from "../../contexts/ThemeContext";
+import api from "../../services/api";
+import { useEffect, useState } from "react";
 
-export default function Sidebar({
-  onSelectCategory,
-  selectedCategory,
-  toggleTheme,
-}) {
+export default function Sidebar({ selectedCategory, toggleTheme }) {
   const { isDark } = useTheme();
   const navigate = useNavigate();
+  const [categories, setCategories] = useState([]);
 
-  const categories = [
-    { label: "All", value: "all" },
-    { label: "Sandwiches & Meals", value: "sandwiches" },
-    { label: "McNuggets & Meals", value: "meals" },
-    { label: "Fries", value: "fries" },
-    { label: "Happy Meals", value: "happymeals" },
-    { label: "McCafé Coffees", value: "mccafe_coffees" },
-    { label: "Beverages", value: "beverages" },
-    { label: "Sides & More", value: "sides_more" },
-    { label: "McCafé Bakery", value: "mccafe_bakery" },
-    { label: "Sweets & Treats", value: "sweets_treats" },
-    { label: "Shareables", value: "shareables" },
-    { label: "Seasonal Specials", value: "seasonal_specials" },
-    { label: "Breakfast", value: "breakfast" },
-    { label: "Burgers & More", value: "burgers_more" },
-    { label: "Cold Drinks", value: "cold_drinks" },
-    { label: "Hot Beverages", value: "hot_beverages" },
-  ];
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const res = await api.get("/categories");
+        setCategories(res.data);
+      } catch (err) {
+        console.error("Failed to fetch categories", err);
+      }
+    };
+    fetchCategories();
+  }, []);
 
   return (
     <div
@@ -42,19 +34,24 @@ export default function Sidebar({
       </div>
 
       <div className="flex-1 overflow-y-auto text-[15px] font-medium divide-y divide-gray-300 custom-scroll">
-        {categories.map((item, index) => (
+        <SidebarItem
+          key="all"
+          label="All Products"
+          value="all"
+          onClick={() => navigate("/")}
+          isActive={selectedCategory === "all"}
+        />
+        {categories.map((item) => (
           <SidebarItem
-            key={index}
+            key={item.id}
             label={item.label}
             value={item.value}
-            onClick={() => {
-              onSelectCategory(item.value);
-              navigate(item.value === "all" ? "/" : `/category/${item.value}`);
-            }}
+            onClick={() => navigate(`/category/${item.value}`)}
             isActive={selectedCategory === item.value}
           />
         ))}
       </div>
+
       <div className="border-t border-gray-300 mt-4 pt-4">
         <button
           onClick={toggleTheme}
@@ -64,19 +61,15 @@ export default function Sidebar({
               : "bg-gradient-to-r from-white to-red-50 border-red-200 hover:from-white hover:to-red-100 text-red-700"
           }`}
         >
-          <div className="flex items-center gap-3 ">
+          <div className="flex items-center gap-3">
             <div
-              className={`p-2 rounded-full ring-1  ${
+              className={`p-2 rounded-full ring-1 ${
                 isDark
                   ? "bg-[#243354] text-white ring-blue-300"
                   : "bg-red-100 text-red-600 ring-red-300"
               }`}
             >
-              {isDark ? (
-                <FaMoon className="text-md" />
-              ) : (
-                <FaSnowflake className="text-md" />
-              )}
+              {isDark ? <FaMoon /> : <FaSnowflake />}
             </div>
             <span className="text-sm font-semibold">
               {isDark ? "Midnight" : "Winter Rose"}

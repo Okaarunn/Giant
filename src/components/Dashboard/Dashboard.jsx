@@ -1,69 +1,23 @@
-import { useEffect, useState } from "react";
 import TopBar from "./TopBar";
 import CheckoutForm from "./CheckoutForm";
 import Products from "./Products";
-import Notification from "./Notification";
+
 import { useTheme } from "../../contexts/ThemeContext.jsx";
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import { useCart } from "../../contexts/CartContext";
 
 export default function Dashboard({ selectedCategory }) {
-  // get isDark from useTheme
   const { isDark } = useTheme();
-
-  // if data exist in localstorage
-  const [selectedProducts, setSelectedProducts] = useState(() => {
-    const saved = localStorage.getItem("selectedProducts");
-    return saved ? JSON.parse(saved) : [];
-  });
-
-  // Notification
-  const [notification, setNotification] = useState(null);
+  const { fetchCart } = useCart();
+  const location = useLocation();
 
   useEffect(() => {
-    localStorage.setItem("selectedProducts", JSON.stringify(selectedProducts));
-  }, [selectedProducts]);
-
-  const handleAddToCheckout = (product) => {
-    const index = selectedProducts.findIndex(
-      (item) => item.name === product.name
-    );
-
-    if (index !== -1) {
-      const updated = [...selectedProducts];
-      updated[index].quantity += 1;
-      setSelectedProducts(updated);
-      setNotification({
-        message: "Quantity updated.",
-        type: "info",
-      });
-    } else {
-      setSelectedProducts([...selectedProducts, { ...product, quantity: 1 }]);
-      setNotification({
-        message: "Success add product.",
-        type: "success",
-      });
+    if (location.state?.reload) {
+      fetchCart(); // refresh cart dari API
+      window.history.replaceState({}, document.title); // hapus state agar tidak fetch lagi pas user klik back
     }
-
-    setTimeout(() => setNotification(null), 2500);
-  };
-
-  // increase decrease qty, remove product from checkout from
-  const increaseQty = (index) => {
-    const updated = [...selectedProducts];
-    updated[index].quantity += 1;
-    setSelectedProducts(updated);
-  };
-
-  const decreaseQty = (index) => {
-    const updated = [...selectedProducts];
-    if (updated[index].quantity > 1) {
-      updated[index].quantity -= 1;
-      setSelectedProducts(updated);
-    } else {
-      // Jika quantity 1 dan dikurangi hapus produk
-      updated.splice(index, 1);
-      setSelectedProducts(updated);
-    }
-  };
+  }, [location.state]);
 
   return (
     <div
@@ -71,32 +25,13 @@ export default function Dashboard({ selectedCategory }) {
         isDark ? "bg-gray-800 text-white" : "bg-gray-100 text-black"
       }`}
     >
-      {/* push notification */}
-      {notification && (
-        <Notification
-          message={notification.message}
-          type={notification.type}
-          onClose={() => setNotification(null)}
-        />
-      )}
-
-      {/* TopBar */}
       <TopBar />
-
       <div className="flex flex-1 overflow-hidden">
         <div className="flex-1 overflow-y-auto custom-scroll p-4">
-          <Products
-            selectedCategory={selectedCategory}
-            addToCheckout={handleAddToCheckout}
-          />
+          <Products selectedCategory={selectedCategory} />
         </div>
-
         <div className="h-auto border-l border-gray-300 p-4">
-          <CheckoutForm
-            selectedProducts={selectedProducts}
-            increaseQty={increaseQty}
-            decreaseQty={decreaseQty}
-          />
+          <CheckoutForm />
         </div>
       </div>
     </div>

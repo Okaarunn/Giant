@@ -20,7 +20,6 @@ export default function App() {
           <Route path="/" element={<Home />} />
           {/* dynamic routing */}
           <Route path="/category/:categoryName" element={<Home />} />
-
           {/* basic routing */}
           <Route path="/order-detail" element={<OrderDetail />} />
           <Route path="/success-order" element={<SuccessOrder />} />

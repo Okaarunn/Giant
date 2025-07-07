@@ -3,43 +3,33 @@ import { useNavigate } from "react-router-dom";
 import { useOrder } from "../../contexts/OrderContext.jsx";
 import { FaPlus, FaMinus } from "react-icons/fa";
 import { useTheme } from "../../contexts/ThemeContext.jsx";
+import { useCart } from "../../contexts/CartContext.jsx";
 
-export default function CheckoutForm({
-  selectedProducts,
-  increaseQty,
-  decreaseQty,
-}) {
+export default function CheckoutForm() {
   const { isDark } = useTheme();
   const navigate = useNavigate();
   const { setOrderData } = useOrder();
+  const { cart, updateQty } = useCart();
 
-  // set customer name
   const [customerName, setCustomerName] = useState("");
-  // set handle name error
   const [nameError, setNameError] = useState(false);
 
-  // Hitung total semua item
   const calculateTotal = () => {
-    return selectedProducts
+    return cart
       .reduce((total, product) => total + product.price * product.quantity, 0)
       .toFixed(2);
   };
 
-  // handle confirm order
   const handleConfirm = () => {
     if (!customerName.trim()) {
       setNameError(true);
       return;
     }
-
     setNameError(false);
-
     setOrderData({
       customerName,
-      selectedProducts,
+      selectedProducts: cart,
     });
-
-    // navigate order detail
     navigate("/order-detail");
   };
 
@@ -60,11 +50,10 @@ export default function CheckoutForm({
           onChange={(e) => setCustomerName(e.target.value)}
           className={`w-full border rounded px-3 py-2 ${
             isDark
-              ? "placeholder-white text-white  border-gray-600"
-              : "placeholder-gray-500 text-black  border-gray-300"
+              ? "placeholder-white text-white border-gray-600"
+              : "placeholder-gray-500 text-black border-gray-300"
           }`}
         />
-
         {nameError && (
           <p className="text-red-500 text-xs mt-1">
             Nama customer tidak boleh kosong.
@@ -84,44 +73,49 @@ export default function CheckoutForm({
             </tr>
           </thead>
           <tbody>
-            {selectedProducts.length === 0 && (
+            {cart.length === 0 ? (
               <tr>
                 <td colSpan="5" className="text-center py-3">
                   No products selected.
                 </td>
               </tr>
+            ) : (
+              cart.map((product) => {
+                const subtotal = (product.price * product.quantity).toFixed(2);
+                return (
+                  <tr key={product.id} className="border-b">
+                    <td className="py-2 max-w-[180px] truncate">
+                      {product.name}
+                    </td>
+                    <td>${product.price.toFixed(2)}</td>
+                    <td>{product.quantity}</td>
+                    <td>${subtotal}</td>
+                    <td>
+                      <div className="flex items-center gap-2">
+                        <button
+                          type="button"
+                          onClick={() =>
+                            updateQty(product.id, product.quantity - 1)
+                          }
+                          className="text-red-500 hover:text-red-700 cursor-pointer border border-red-300 rounded p-1"
+                        >
+                          <FaMinus size={10} />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() =>
+                            updateQty(product.id, product.quantity + 1)
+                          }
+                          className="text-green-600 hover:text-green-800 cursor-pointer  border border-green-300 rounded p-1"
+                        >
+                          <FaPlus size={10} />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })
             )}
-
-            {selectedProducts.map((product, index) => {
-              const subtotal = (product.price * product.quantity).toFixed(2);
-
-              return (
-                <tr key={index} className="border-b">
-                  <td className="py-2 max-w-[180px] truncate">
-                    {product.name}
-                  </td>
-                  <td>${product.price.toFixed(2)}</td>
-                  <td>{product.quantity}</td>
-                  <td>${subtotal}</td>
-                  <td>
-                    <div className="flex items-center gap-2">
-                      <button
-                        onClick={() => decreaseQty(index)}
-                        className="text-red-500 cursor-pointer hover:text-red-700 border border-red-300 rounded p-1"
-                      >
-                        <FaMinus size={10} />
-                      </button>
-                      <button
-                        onClick={() => increaseQty(index)}
-                        className="text-green-600 cursor-pointer hover:text-green-800 border border-green-300 rounded p-1"
-                      >
-                        <FaPlus size={10} />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              );
-            })}
           </tbody>
         </table>
       </div>
@@ -132,6 +126,7 @@ export default function CheckoutForm({
       </div>
 
       <button
+        type="button"
         onClick={handleConfirm}
         className="w-full bg-red-500 hover:bg-red-600 text-white py-2 cursor-pointer rounded transition font-semibold"
       >

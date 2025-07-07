@@ -2,43 +2,43 @@
   "categories": [
     {
       "id": "1",
-      "label": "Sandwiches & Meals",
-      "value": "sandwiches"
+      "label": "Breakfast",
+      "value": "Breakfast"
     },
     {
       "id": "2",
-      "label": "McNuggets & Meals",
-      "value": "meals"
+      "label": "Beef",
+      "value": "Beef"
     },
     {
       "id": "3",
-      "label": "Fries",
-      "value": "fries"
+      "label": "Chicken",
+      "value": "Chicken"
     },
     {
       "id": "4",
-      "label": "Happy Meals",
-      "value": "happymeals"
+      "label": "Fish",
+      "value": "Fish"
     },
     {
       "id": "5",
-      "label": "McCafé Coffees",
-      "value": "mccafe_coffees"
+      "label": "Drink",
+      "value": "Drink"
     },
     {
       "id": "6",
-      "label": "Beverages",
-      "value": "beverages"
+      "label": "Desserts",
+      "value": "Desserts"
     },
     {
       "id": "7",
-      "label": "Sides & More",
-      "value": "sides_more"
+      "label": "GiantCafe",
+      "value": "GiantCafe"
     },
     {
       "id": "8",
-      "label": "McCafé Bakery",
-      "value": "mccafe_bakery"
+      "label": "Snack",
+      "value": "Snack"
     },
     {
       "id": "9",
@@ -54,134 +54,197 @@
       "id": "11",
       "label": "Seasonal Specials",
       "value": "seasonal_specials"
-    },
-    {
-      "id": "12",
-      "label": "Breakfast",
-      "value": "breakfast"
     }
   ],
   "products": [
     {
       "id": "1",
-      "name": "Burger",
-      "price": 5.99,
-      "calories": 450,
-      "image": "food.avif",
-      "categoryId": 1
+      "name": "Egg & Chees Muffin",
+      "price": 3.49,
+      "calories": 310,
+      "image": "Egg & Chees Muffin.png",
+      "category": "Breakfast"
     },
     {
       "id": "2",
-      "name": "Vegan Salad",
-      "price": 4.5,
-      "calories": 220,
-      "image": "food.avif",
-      "categoryId": 2
+      "name": "Chicken Muffin",
+      "price": 6.99,
+      "calories": 520,
+      "image": "Chicken Muffin.webp",
+      "category": "Breakfast"
     },
     {
       "id": "3",
-      "name": "Kentang goreng",
-      "price": 4.5,
-      "calories": 220,
-      "image": "food.avif",
-      "categoryId": 3
+      "name": "Egg McMuffin",
+      "price": 5.29,
+      "calories": 390,
+      "image": "Egg McMuffin.webp",
+      "category": "Breakfast"
     },
     {
       "id": "4",
-      "name": "Chicken McNuggets (6 pcs)",
-      "price": 3.99,
-      "calories": 270,
-      "image": "food.avif",
-      "categoryId": 2
+      "name": "Triple Cheeseburger",
+      "price": 4.75,
+      "calories": 610,
+      "image": "Triple Cheeseburger.webp",
+      "category": "Beef"
     },
     {
       "id": "5",
-      "name": "Happy Meal with Cheeseburger & Milk",
-      "price": 4.99,
-      "calories": 500,
-      "image": "food.avif",
-      "categoryId": 4
+      "name": "Cheeseburger Deluxe",
+      "price": 5.15,
+      "calories": 480,
+      "image": "Cheeseburger Deluxe.webp",
+      "category": "Beef"
     },
     {
       "id": "6",
-      "name": "Large French Fries with Extra Salt",
-      "price": 2.49,
-      "calories": 340,
-      "image": "food.avif",
-      "categoryId": 3
+      "name": "Tamago Burger",
+      "price": 6.45,
+      "calories": 540,
+      "image": "Beef Yakiniku Tamago Burger.png",
+      "category": "Beef"
     },
     {
       "id": "7",
-      "name": "McCafé Iced Coffee - Caramel Flavor",
-      "price": 2.99,
-      "calories": 180,
-      "image": "food.avif",
-      "categoryId": 5
+      "name": "Korean Soy Garlic Wings",
+      "price": 7.99,
+      "calories": 570,
+      "image": "Paket HeBat - Korean Soy Garlic Wings.png",
+      "category": "Chicken"
     },
     {
       "id": "8",
-      "name": "Coca-Cola (Large Size)",
-      "price": 1.99,
-      "calories": 200,
-      "image": "food.avif",
-      "categoryId": 6
+      "name": "PaNas 2 with Fries",
+      "price": 6.25,
+      "calories": 650,
+      "image": "PaNas 2 with Fries.webp",
+      "category": "Chicken"
     },
     {
       "id": "9",
-      "name": "Spicy Chicken Sandwich with Mayo",
-      "price": 6.25,
-      "calories": 520,
-      "image": "food.avif",
-      "categoryId": 1
+      "name": "Fish Fillet Burger",
+      "price": 5.95,
+      "calories": 430,
+      "image": "Fish Fillet Burger.webp",
+      "category": "Fish"
     },
     {
       "id": "10",
-      "name": "Side Salad with Low-Fat Dressing",
-      "price": 2.75,
-      "calories": 120,
-      "image": "food.avif",
-      "categoryId": 7
+      "name": "Coca Cola",
+      "price": 2.25,
+      "calories": 140,
+      "image": "Coca Cola.png",
+      "category": "Drink"
     },
     {
       "id": "11",
-      "name": "Blueberry Muffin from McCafé Bakery",
-      "price": 2.25,
-      "calories": 360,
-      "image": "food.avif",
-      "categoryId": 8
+      "name": "Iced Milo",
+      "price": 2.99,
+      "calories": 180,
+      "image": "Iced Milo.png",
+      "category": "Drink"
     },
     {
       "id": "12",
-      "name": "Hot Apple Pie (Classic McDonald's Dessert)",
-      "price": 1.49,
-      "calories": 240,
-      "image": "food.avif",
-      "categoryId": 9
+      "name": "Tehbotol Sosro Kotak",
+      "price": 2.5,
+      "calories": 120,
+      "image": "Tehbotol Sosro Kotak.webp",
+      "category": "Drink"
     },
     {
       "id": "13",
-      "name": "20 pc Chicken McNuggets Share Box",
-      "price": 7.99,
-      "calories": 900,
-      "image": "food.avif",
-      "categoryId": 10
+      "name": "Chocolate Sundae",
+      "price": 3.5,
+      "calories": 290,
+      "image": "Chocolate Sundae.webp",
+      "category": "Desserts"
     },
     {
       "id": "14",
-      "name": "Pumpkin Spice Latte Seasonal Edition",
-      "price": 3.99,
-      "calories": 320,
-      "image": "food.avif",
-      "categoryId": 11
+      "name": "Strawberry Sundae",
+      "price": 3.5,
+      "calories": 270,
+      "image": "Strawberry Sundae.webp",
+      "category": "Desserts"
     },
     {
       "id": "15",
-      "name": "Breakfast Burrito with Sausage & Egg",
-      "price": 3.59,
-      "calories": 390,
-      "image": "food.avif",
-      "categoryId": 12
+      "name": "Double Choco Sundae",
+      "price": 3.99,
+      "calories": 330,
+      "image": "Double Choco Sundae.png",
+      "category": "Desserts"
+    },
+    {
+      "id": "16",
+      "name": "Cokelat Strawberry Sundae",
+      "price": 4.25,
+      "calories": 350,
+      "image": "Cokelat Strawberry Sundae.png",
+      "category": "Desserts"
+    },
+    {
+      "id": "17",
+      "name": "Hot Matcha Latte",
+      "price": 3.75,
+      "calories": 220,
+      "image": "Hot Matcha Latte.webp",
+      "category": "GiantCafe"
+    },
+    {
+      "id": "18",
+      "name": "Butter Croissant",
+      "price": 2.89,
+      "calories": 250,
+      "image": "Butter Croissant.webp",
+      "category": "GiantCafe"
+    },
+    {
+      "id": "19",
+      "name": "Cheese Croissant",
+      "price": 3.25,
+      "calories": 280,
+      "image": "Cheese Croissant.webp",
+      "category": "GiantCafe"
+    },
+    {
+      "id": "20",
+      "name": "Sweet Corn",
+      "price": 2.5,
+      "calories": 190,
+      "image": "Sweet Corn.webp",
+      "category": "Snack"
     }
   ],
-  "carts": []
+  "carts": [],
+  "orders": [
+    {
+      "id": "f62c",
+      "customerName": "Aditya",
+      "products": [
+        {
+          "id": "1",
+          "name": "Egg & Chees Muffin",
+          "price": 3.49,
+          "quantity": 1
+        },
+        {
+          "id": "2",
+          "name": "Chicken Muffin",
+          "price": 6.99,
+          "quantity": 1
+        },
+        {
+          "id": "3",
+          "name": "Egg McMuffin",
+          "price": 5.29,
+          "quantity": 1
+        }
+      ],
+      "total": "15.77",
+      "createdAt": "2025-07-07T15:46:18.694Z"
+    }
+  ]
 }

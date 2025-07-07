@@ -43,12 +43,41 @@ body {
 }
 
 @media print {
+  @page {
+    size: 100mm 150mm;
+    margin: 0px 15px;
+  }
+
   body {
-    width: 58mm;
-    font-size: 12px;
     margin: 0;
     padding: 0;
     background: white !important;
+    font-size: 10pt;
+  }
+
+  body * {
+    visibility: hidden;
+  }
+
+  .print-container,
+  .print-container * {
+    visibility: visible;
+  }
+
+  .print-container {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: auto;
+    max-width: none;
+    padding: 2mm;
+    margin: 0;
+    overflow: visible;
+  }
+
+  .no-print {
+    display: none !important;
   }
 
   * {
@@ -56,40 +85,32 @@ body {
     box-shadow: none !important;
     background: white !important;
   }
+}
 
-  .print\:bg-white {
-    background-color: white !important;
+@keyframes fadeIn {
+  from {
+    opacity: 0;
   }
+  to {
+    opacity: 1;
+  }
+}
 
-  .print\:text-black {
-    color: black !important;
+@keyframes fadeOut {
+  from {
+    opacity: 1;
   }
+  to {
+    opacity: 0;
+  }
+}
 
-  .print\:shadow-none {
-    box-shadow: none !important;
-  }
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
 
-  .print-container {
-    width: 100%;
-    max-width: 58mm;
-    padding: 0;
-    margin: 0 auto;
-  }
-
-  .receipt {
-    width: 58mm;
-    padding: 8px;
-    font-family: monospace;
-  }
-
-  .no-print {
-    display: none !important;
-  }
-
-  @page {
-    size: 58mm auto;
-    margin: 0;
-  }
+.animate-fade-out {
+  animation: fadeOut 1s ease-in forwards;
 }
 
 /* color
