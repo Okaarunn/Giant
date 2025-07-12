@@ -24,11 +24,13 @@ export default function DetailOrder() {
   }, [orderData.selectedProducts]);
 
   // handle confirm
+
   const handleConfirmOrder = async () => {
     setIsSubmitting(true);
     try {
-      // post data in orders
-      await api.post("/orders", {
+      const existingOrders = JSON.parse(localStorage.getItem("orders")) || [];
+
+      const newOrder = {
         customerName: orderData.customerName,
         products: orderData.selectedProducts.map((item) => ({
           id: item.id,
@@ -38,24 +40,57 @@ export default function DetailOrder() {
         })),
         total: total.toFixed(2),
         createdAt: new Date().toISOString(),
-      });
+      };
 
-      // after post data, delete carts
-      const carts = await api.get("/carts");
-      await Promise.all(
-        carts.data.map((item) => api.delete(`/carts/${item.id}`))
-      );
+      existingOrders.push(newOrder);
+      localStorage.setItem("orders", JSON.stringify(existingOrders));
 
-      // navigate succes page after success post orders
+      // Kosongkan keranjang
+      localStorage.setItem("cart", JSON.stringify([]));
+
+      // Navigate
       navigate("/success-order");
     } catch (error) {
-      console.error("Failed to post order", error);
+      console.error("Failed to simulate order", error);
       alert("Failed to place order. Please try again.");
     } finally {
       setIsSubmitting(false);
       setShowModal(false);
     }
   };
+
+  // const handleConfirmOrder = async () => {
+  //   setIsSubmitting(true);
+  //   try {
+  //     // post data in orders
+  //     await api.post("/orders", {
+  //       customerName: orderData.customerName,
+  //       products: orderData.selectedProducts.map((item) => ({
+  //         id: item.id,
+  //         name: item.name,
+  //         price: item.price,
+  //         quantity: item.quantity,
+  //       })),
+  //       total: total.toFixed(2),
+  //       createdAt: new Date().toISOString(),
+  //     });
+
+  //     // after post data, delete carts
+  //     const carts = await api.get("/carts");
+  //     await Promise.all(
+  //       carts.data.map((item) => api.delete(`/carts/${item.id}`))
+  //     );
+
+  //     // navigate succes page after success post orders
+  //     navigate("/success-order");
+  //   } catch (error) {
+  //     console.error("Failed to post order", error);
+  //     alert("Failed to place order. Please try again.");
+  //   } finally {
+  //     setIsSubmitting(false);
+  //     setShowModal(false);
+  //   }
+  // };
 
   // if dont have product in selected product
   if (!orderData.customerName || orderData.selectedProducts.length === 0) {

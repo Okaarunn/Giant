@@ -5,6 +5,7 @@ import { useTheme } from "../contexts/ThemeContext";
 import Sidebar from "../components/Sidebar/Sidebar";
 import Dashboard from "../components/Dashboard/Dashboard";
 import api from "../services/api";
+import axios from "axios";
 
 export default function Home() {
   const { categoryName } = useParams();
@@ -18,8 +19,10 @@ export default function Home() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await api.get("/categories");
-        const values = res.data.map((cat) => cat.value);
+        const res = await axios.get(
+          "https://adityawjy.github.io/giant_data/db.json"
+        );
+        const values = res.data.categories.map((cat) => cat.value);
         setValidCategories(values);
       } catch (error) {
         console.error("Failed to fetch categories", error);

@@ -6,46 +6,56 @@ const CartContext = createContext();
 export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
 
-  // fetch data cart
+  // Fetch cart data (sekali, dari db.json)
   const fetchCart = async () => {
-    const res = await api.get("/carts");
-    setCart(res.data);
+    try {
+      const serverCart = await api.getCarts();
+      const localCart = JSON.parse(localStorage.getItem("cart")) || [];
+
+      // gabungkan dari API + local (atau pakai local saja)
+      setCart(localCart.length ? localCart : serverCart);
+    } catch (error) {
+      console.error("Failed to fetch cart", error);
+    }
   };
 
   useEffect(() => {
-    // mount cart
     fetchCart();
   }, []);
 
-  // handle add to cart func
-  const addToCart = async (product) => {
-    const res = await api.get(`/carts?id=${product.id}`);
-    const existing = res.data[0];
+  // Simpan cart ke localStorage setiap kali berubah
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart]);
 
+  // Tambah ke cart
+  const addToCart = (product) => {
+    const existing = cart.find((item) => item.id === product.id);
+
+    let updatedCart;
     if (existing) {
-      // if product already exist in cart
-      await api.patch(`/carts/${existing.id}`, {
-        quantity: existing.quantity + 1,
-      });
+      updatedCart = cart.map((item) =>
+        item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+      );
     } else {
-      // if product not exist in cart
-      await api.post("/carts", { ...product, quantity: 1 });
+      updatedCart = [...cart, { ...product, quantity: 1 }];
     }
 
-    // mount cart
-    fetchCart();
+    setCart(updatedCart);
   };
 
-  // handle update qty
-  const updateQty = async (id, newQty) => {
+  // Update jumlah produk
+  const updateQty = (id, newQty) => {
+    let updatedCart;
     if (newQty <= 0) {
-      // qty < 0 remove product from cart
-      await api.delete(`/carts/${id}`);
+      updatedCart = cart.filter((item) => item.id !== id);
     } else {
-      // qty > 0
-      await api.patch(`/carts/${id}`, { quantity: newQty });
+      updatedCart = cart.map((item) =>
+        item.id === id ? { ...item, quantity: newQty } : item
+      );
     }
-    fetchCart();
+
+    setCart(updatedCart);
   };
 
   return (

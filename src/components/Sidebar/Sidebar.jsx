@@ -17,13 +17,13 @@ export default function Sidebar({ selectedCategory, toggleTheme }) {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await api.get("/categories");
-        setCategories(res.data);
+        const data = await api.getCategories();
+        setCategories(data);
       } catch (err) {
         console.error("Failed to fetch categories", err);
       }
     };
-    // mount
+
     fetchCategories();
   }, []);
 

@@ -11,8 +11,8 @@ export default function Products({ selectedCategory }) {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const res = await api.get("/products");
-      setProducts(res.data);
+      const data = await api.getProducts();
+      setProducts(data);
     };
     fetchProducts();
   }, []);
