@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "https://okaarunn.github.io/giant_data/db.json";
+const API_URL = "https://adityawjy.github.io/giant_data/db.json";
 
 const api = {
   getCategories: async () => {
