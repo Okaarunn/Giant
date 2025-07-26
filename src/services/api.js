@@ -7,6 +7,7 @@ const api = {
     const res = await axios.get(API_URL);
     return res.data.categories;
   },
+
   getProducts: async () => {
     const res = await axios.get(API_URL);
     return res.data.products;

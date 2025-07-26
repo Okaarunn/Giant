@@ -19,10 +19,8 @@ export default function Home() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await axios.get(
-          "https://adityawjy.github.io/giant_data/db.json"
-        );
-        const values = res.data.categories.map((cat) => cat.value);
+        const categories = await api.getCategories();
+        const values = categories.map((cat) => cat.value);
         setValidCategories(values);
       } catch (error) {
         console.error("Failed to fetch categories", error);
